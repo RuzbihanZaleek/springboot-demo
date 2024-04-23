@@ -4,6 +4,7 @@ import com.example.quizApp.dto.QuestionDTO;
 import com.example.quizApp.entity.Question;
 import com.example.quizApp.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,17 +17,17 @@ public class QuestionController {
     QuestionService questionService;
 
     @GetMapping(value = "allQuestions")
-    public List<QuestionDTO> getAllQuestions() {
+    public ResponseEntity<List<QuestionDTO>> getAllQuestions() {
         return questionService.getAllQuestions();
     }
 
     @GetMapping(value = "getQuestionsByCategory/{category}")
-    public List<QuestionDTO> getQuestionsByCategory(@PathVariable String category) {
+    public ResponseEntity<List<QuestionDTO>> getQuestionsByCategory(@PathVariable String category) {
         return questionService.getQuestionsByCategory(category);
     }
 
     @PostMapping(value = "addQuestion")
-    public String addQuestion(@RequestBody QuestionDTO question) {
+    public ResponseEntity<String> addQuestion(@RequestBody QuestionDTO question) {
         return questionService.addQuestion(question);
     }
 
