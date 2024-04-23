@@ -26,4 +26,25 @@ public class QuestionService {
         return modelMapper.map(questions, new TypeToken<List<QuestionDTO>>() {
         }.getType());
     }
+
+    public List<QuestionDTO> getQuestionsByCategory(String category) {
+        List<Question> questions = questionRepo.findByCategory(category);
+        return modelMapper.map(questions, new TypeToken<List<QuestionDTO>>() {
+        }.getType());
+    }
+
+    public String addQuestion(QuestionDTO question) {
+        questionRepo.save(modelMapper.map(question, Question.class));
+        return "Success";
+    }
+
+    public String updateQuestion(QuestionDTO question) {
+        questionRepo.save(modelMapper.map(question, Question.class));
+        return "Success";
+    }
+
+    public String deleteQuestion(QuestionDTO question) {
+        questionRepo.delete(modelMapper.map(question, Question.class));
+        return "Question Deleted Successfully";
+    }
 }

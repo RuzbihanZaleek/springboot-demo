@@ -1,11 +1,10 @@
 package com.example.quizApp.controller;
 
 import com.example.quizApp.dto.QuestionDTO;
+import com.example.quizApp.entity.Question;
 import com.example.quizApp.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,10 +13,30 @@ import java.util.List;
 public class QuestionController {
 
     @Autowired
-    private QuestionService questionService;
+    QuestionService questionService;
 
-    @GetMapping(value = "/allQuestions")
+    @GetMapping(value = "allQuestions")
     public List<QuestionDTO> getAllQuestions() {
         return questionService.getAllQuestions();
+    }
+
+    @GetMapping(value = "getQuestionsByCategory/{category}")
+    public List<QuestionDTO> getQuestionsByCategory(@PathVariable String category) {
+        return questionService.getQuestionsByCategory(category);
+    }
+
+    @PostMapping(value = "addQuestion")
+    public String addQuestion(@RequestBody QuestionDTO question) {
+        return questionService.addQuestion(question);
+    }
+
+    @PutMapping(value = "updateQuestion")
+    public String updateQuestion(@RequestBody QuestionDTO question) {
+        return questionService.updateQuestion(question);
+    }
+
+    @DeleteMapping(value = "deleteQuestion")
+    public String deleteQuestion(@RequestBody QuestionDTO question) {
+        return  questionService.deleteQuestion(question);
     }
 }
