@@ -4,6 +4,7 @@ import com.example.quizApp.dto.QuestionDTO;
 import com.example.quizApp.entity.Question;
 import com.example.quizApp.entity.QuestionWrapper;
 import com.example.quizApp.entity.Quiz;
+import com.example.quizApp.entity.Response;
 import com.example.quizApp.repo.QuestionRepo;
 import com.example.quizApp.repo.QuizRepo;
 import org.modelmapper.ModelMapper;
@@ -51,5 +52,18 @@ public class QuizService {
 
 
         return new ResponseEntity<>(questionsForUser, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Integer> calculateResult(int id, List<Response> responses) {
+        Quiz quiz = quizRepo.findById(id).get();
+        List<Question> questions = quiz.getQuestions();
+        int result = 0;
+        int i = 0;
+        for (Response response : responses) {
+            if (response.getResponse().equals(questions.get(i).getRightAnswer())) result++;
+            i++;
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
